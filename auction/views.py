@@ -1,12 +1,71 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
+
 from .models import *
+
 
 # Create your views here.
 
 
 def home(request):
-    return render(request, "home.html")
+    listings = Listing.objects.filter(is_publish=True)
+    if listings:
+        context = {"data": listings}
+    else:
+        context = {"status": "There is no information"}
+    return render(request, "home.html", context)
+
+
+@login_required
+def listing_detail(request, pk):
+    context = {}
+    listing = Listing.objects.get(id=pk)
+    if request.POST:
+        bid = request.POST["bid"]
+        if int(bid) > listing.price:
+            b = Bid.objects.create(listing_id=listing, author=request.user, bid=bid)
+            b.save()
+            listing.price = bid
+            listing.save()
+            context["status"] = "Your BID have been put successfully"
+            context['col'] = 'alert-success'
+        else:
+            context["status"] = "BID should be greater than listing's current price."
+            context['col'] = 'alert-danger'
+    context['data'] = listing
+    return render(request, "listing_detail.html", context)
+
+
+@login_required
+def comment(request, pk):
+    if request.POST:
+        listing = Listing.objects.get(id=pk)
+        comment_message = request.POST["comment_message"]
+        c = Comment.objects.create(listing_id=listing, author=request.user, message=comment_message)
+        c.save()
+        messages.success(request, "Your comment have been published successfully")
+        return redirect(f"/listing_detail/{listing.id}")
+
+
+@login_required
+def watch_list(request):
+    listing = None
+    if request.POST:
+        watch = request.POST["watchlist_id"]
+        listing = Listing.objects.get(id=watch)
+        if not WatchList.objects.filter(listing_id=listing).exists():
+            w = WatchList.objects.create(listing_id=listing, user=request.user)
+            w.save()
+            messages.success(request, "The Listing have been added to WatchList successfully")
+        else:
+            messages.error(request, "You have been added already")
+    return redirect(f"/listing_detail/{listing.id}")
+
+
+def category_page(request):
+    pass
 
 
 def signup(request):
