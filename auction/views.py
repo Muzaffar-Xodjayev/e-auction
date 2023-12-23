@@ -50,6 +50,27 @@ def comment(request, pk):
 
 
 @login_required
+def create_listing(request):
+    context = {}
+    data = Category.objects.all()
+    context["data"] = data
+    if request.POST:
+        title = request.POST["title"]
+        img = request.POST["image"]
+        cat = request.POST["category"]
+        category = Category.objects.get(name=cat)
+        desc = request.POST["description"]
+        price = request.POST["price"]
+        listing = Listing.objects.create(author=request.user, title=title, category=category, img=img, description=desc,
+                                         price=price)
+        listing.save()
+        context["status"] = "Listing have been successfully created."
+        context["col"] = "alert-success"
+
+    return render(request, "create_listing.html", context)
+
+
+@login_required
 def watch_list(request):
     listing = None
     if request.POST:
@@ -64,8 +85,33 @@ def watch_list(request):
     return redirect(f"/listing_detail/{listing.id}")
 
 
-def category_page(request):
-    pass
+def category(request):
+    context = {}
+    data = Category.objects.all()
+    context["data"] = data
+    return render(request, "category.html", context)
+
+
+def category_page(request, pk):
+    context = {}
+    data = Category.objects.get(id=pk)
+    listing = Listing.objects.filter(category=data)
+    context["listing"] = listing
+    return render(request, "category.html", context)
+
+
+@login_required
+def watchlist_page(request):
+    context = {}
+    data = WatchList.objects.filter(user=request.user)
+    context["data"] = data
+    return render(request, "watchlist_page.html", context)
+
+
+@login_required
+def delete_watching_list(request, pk):
+    data = WatchList.objects.filter(listing_id=pk).delete()
+    return redirect("watch-list-page")
 
 
 def signup(request):

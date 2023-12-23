@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h3 align="center">Watchlist</h3>
+    <hr>
+    {% for i in data %}
+    <a class="row shadow text-decoration-none text-dark" href="{% url 'listing-detail-page' i.listing_id.id %}">
+        <div class="col-lg-4 p-2">
+            <img src="/media/{{i.listing_id.img}}" class="img-fluid" alt="">
+        </div>
+        <div class="col-lg-4 my-auto">
+            <h4>{{i.listing_id.title}}</h4>
+            <h5>Price: {{i.listing_id.price}}$</h5>
+            <p>{{i.listing_id.description|truncatechars:150}}</p>
+            <em>{{i.listing_id.created_at}}</em>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a href="{% url 'delete-watching-list' i.listing_id.id %}" class="btn btn-danger" style="margin-top:-40px;">Delete</a>
+        </div>
+    </a>
+
+    {% endfor %}
+</div>
+{% endblock %}
