@@ -1,0 +1,53 @@
+{% include "home.html" %}
+{% block content %}
+<div class="container m-5">
+    <div class="col-lg-6 mx-auto">
+        <h2 class="text-center">Sign Up Form</h2>
+        <hr class="text-center">
+    </div>
+    <div class="row">
+        <div class="col-lg-4 mx-auto">
+            <form method="post">
+                {% csrf_token %}
+                {% if status %}
+                   <div class="alert {{col}}">{{status}}</div>
+                {% endif %}
+                <label for="firstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstname" name="firstname">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastname" name="lastname">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email">
+                <label for="pwd" class="form-label">Password</label>
+                <div id="result"></div>
+                <input type="password" class="form-control" onkeyup="checkFields()" id="pwd" name="password">
+                <label for="pwd2" class="form-label">Password (again)</label>
+                <input type="password" class="form-control" onkeyup="checkFields()" id="pwd2" name="password2">
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success my-2" id="submitButton">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function checkFields() {
+      var value1 = document.getElementById('pwd').value;
+      var value2 = document.getElementById('pwd2').value;
+      var submitButton = document.getElementById('submitButton');
+      var result = document.getElementById("result");
+      if (value1 !== value2) {
+        result.innerHTML = "Two password field is not same"
+        result.classList.add("text-danger")
+        submitButton.classList.add('disabled');
+      } else {
+        result.innerHTML = ""
+        result.classList.remove("text-danger")
+        submitButton.classList.remove('disabled');
+      }
+    }
+
+</script>
+{% endblock %}
