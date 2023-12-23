@@ -1,0 +1,26 @@
+{% include "home.html" %}
+{% block content %}
+<div class="container m-5">
+    <div class="col-lg-6 mx-auto">
+        <h2 class="text-center">Login Form</h2>
+        <hr class="text-center">
+    </div>
+    <div class="row">
+        <div class="col-lg-4 mx-auto">
+            <form method="post">
+                {% csrf_token %}
+                {% if status %}
+                   <div class="alert {{col}}">{{status}}</div>
+                {% endif %}
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username">
+                <label for="pwd" class="form-label">Password</label>
+                <input type="password" class="form-control" id="pwd" name="password">
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success my-2" id="submitButton">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
