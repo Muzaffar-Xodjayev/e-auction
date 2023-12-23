@@ -25,13 +25,13 @@
                     <a class="nav-link" href="{% url 'home-page' %}">Active Listings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Categories</a>
+                    <a class="nav-link" href="{% url 'category-page' %}">Categories</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Watchlist</a>
+                    <a class="nav-link" href="{% url 'watch-list-page'%}">Watchlist</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Create Listing</a>
+                    <a class="nav-link" href="{% url 'create-listing-page' %}">Create Listing</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Signed as {{user.first_name}}</a>
@@ -44,7 +44,7 @@
                     <a class="nav-link" href="{% url 'home-page' %}">Active Listings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Categories</a>
+                    <a class="nav-link" href="{% url 'category-page' %}">Categories</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'signup-page' %}">Sign Up</a>
