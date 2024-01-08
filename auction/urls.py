@@ -11,7 +11,7 @@ urlpatterns = [
     path("delete_watchlist_page/<int:pk>/", delete_watching_list, name="delete-watching-list"),
     path("listing_detail/<int:pk>/", listing_detail, name="listing-detail-page"),
     path("comment/<int:pk>/", comment, name="comment-page"),
-    path("watchlist/", watch_list, name="watchlist-page"),
+    # path("watchlist/", watch_list, name="watchlist-page"),
     path("login/", login_page, name="login-page"),
     path("logout/", logout_page, name="logout-page"),
 ]
