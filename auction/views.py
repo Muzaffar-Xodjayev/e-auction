@@ -34,7 +34,14 @@ def listing_detail(request, pk):
         else:
             context["status"] = "BID should be greater than listing's current price."
             context['col'] = 'alert-danger'
+    if not WatchList.objects.filter(listing_id=listing).exists():
+        w = WatchList.objects.create(listing_id=listing, user=request.user)
+        w.save()
+    comments = Comment.objects.filter(listing_id=listing)
+    bids = Bid.objects.filter(listing_id=listing)
     context['data'] = listing
+    context["comments"] = comments
+    context["bids"] = bids
     return render(request, "listing_detail.html", context)
 
 
@@ -68,21 +75,6 @@ def create_listing(request):
         context["col"] = "alert-success"
 
     return render(request, "create_listing.html", context)
-
-
-@login_required
-def watch_list(request):
-    listing = None
-    if request.POST:
-        watch = request.POST["watchlist_id"]
-        listing = Listing.objects.get(id=watch)
-        if not WatchList.objects.filter(listing_id=listing).exists():
-            w = WatchList.objects.create(listing_id=listing, user=request.user)
-            w.save()
-            messages.success(request, "The Listing have been added to WatchList successfully")
-        else:
-            messages.error(request, "You have been added already")
-    return redirect(f"/listing_detail/{listing.id}")
 
 
 def category(request):
