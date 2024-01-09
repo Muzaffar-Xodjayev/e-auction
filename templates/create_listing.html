@@ -8,20 +8,23 @@
     <hr>
     <div class="row">
         <div class="col-lg-6 mx-auto">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label class="form-label">Title</label>
-                <input type="text" class="form-control" placeholder="Enter a title..." name="title">
+                <input type="text" class="form-control" required placeholder="Enter a title..." name="title">
                 <label class="form-label">Image</label>
-                <input type="file" class="form-control" name="image">
+                <input type="file" class="form-control" name="image" required>
                 <label class="form-label" for="category">Category</label><br>
-                <em style="font-size:14px;">Category List: {% for i in data%} {{i.name}}, {% endfor %}</em>
-                <input type="text" class="form-control" name="category" placeholder="Enter a title..." id="category">
+                <select name="category" id="category" class="form-control">
+                    {% for i in data %}
+                    <option>{{i.name}}</option>
+                    {% endfor %}
+                </select>
                 <label class="form-label">Description</label>
-                <textarea name="description" cols="30" rows="5" class="form-control"
+                <textarea name="description" required cols="30" rows="5" class="form-control"
                           placeholder="Enter a desc.."></textarea>
                 <label class="form-label">Price</label>
-                <input type="number" class="form-control" name="price" placeholder="Enter a price..">
+                <input type="number" required class="form-control" name="price" placeholder="Enter a price..">
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-primary my-2" type="submit">Create</button>
                 </div>

@@ -13,7 +13,7 @@ class Listing(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     title = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
-    img = models.ImageField(upload_to="listing", default="img/default_model.png")
+    img = models.ImageField(upload_to="listings/", default="/default/default_model.png")
     description = models.TextField()
     price = models.IntegerField(default=0)
     is_publish = models.BooleanField(default=True)

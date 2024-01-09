@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h3 align="center">Edit Listing</h3>
+    <hr>
+    {% if data.author == request.user %}
+    <div class="col-lg-6 mx-auto">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" value="{{data.title}}" name="new_title">
+            <label class="form-label">Current Image</label>
+            <div class="col-lg-5"><img src="{{data.img.url}}" alt="smth" class="img-fluid"> <br></div>
+            <label class="form-label">New Image <i>(optional)</i></label>
+            <input type="file" name="new_image" class="form-control">
+            <label class="form-label">Category</label><br>
+            <select name="new_cat" class="form-control">
+                {% for i in categories %}
+                <option>{{i.name}}</option>
+                {% endfor %}
+            </select>
+            <label class="form-label">Description</label>
+            <textarea name="new_description" cols="30" rows="5" class="form-control"
+                      >{{data.description}}</textarea>
+            <label class="form-label">Price</label>
+            <input type="number" class="form-control" name="new_price" value="{{data.price}}">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-warning my-2" type="submit">Edit</button>
+            </div>
+        </form>
+    </div>
+    {% else %}
+    <p class="text-danger">Sorry, This listing don't belong to you</p>
+    {% endif %}
+</div>
+{% endblock %}
