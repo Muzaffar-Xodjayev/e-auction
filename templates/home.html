@@ -11,7 +11,7 @@
     {% if user.is_authenticated %}
     <a class="row shadow text-decoration-none text-dark" href="{% url 'listing-detail-page' i.id %}">
         <div class="col-lg-4 p-2">
-            <img src="/media/{{i.img}}" class="img-fluid" alt="">
+            <img src="{{i.img.url}}" class="img-fluid" alt="">
         </div>
         <div class="col-lg-6 my-auto">
             <h4>{{i.title}}</h4>
@@ -23,7 +23,7 @@
     {% else %}
     <div class="row shadow">
         <div class="col-lg-4 p-2">
-            <img src="/media/{{i.img}}" class="img-fluid" alt="">
+            <img src="{{i.img.url}}" class="img-fluid" alt="">
         </div>
         <div class="col-lg-6 my-auto">
             <h4>{{i.title}}</h4>

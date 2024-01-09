@@ -20,12 +20,14 @@
     {% endif %}
     <div class="row">
         <div class="col-lg-6 my-2">
-            <img src="/media/{{data.img}}" class="img-fluid" alt="">
+            <img src="{{data.img.url}}" class="img-fluid" alt="">
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12 mx-auto">
-            {{data.author}}
+            {% if data.author == request.user %}
+            <a href="{% url 'edit-listing-page' data.id %}" class="btn btn-warning px-2">Edit</a>
+            {% endif %}
             <h2>Title: {{data.title}}</h2>
             <span class="bg-secondary text-white p-1 rounded">WatchList</span>
             <h3>Price: {{data.price}}$</h3>
