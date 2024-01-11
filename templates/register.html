@@ -13,18 +13,18 @@
                    <div class="alert {{col}}">{{status}}</div>
                 {% endif %}
                 <label for="firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="firstname" name="firstname">
+                <input type="text" class="form-control" id="firstname" name="firstname" required>
                 <label for="lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastname" name="lastname">
+                <input type="text" class="form-control" id="lastname" name="lastname" required>
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username">
+                <input type="text" class="form-control" id="username" name="username" required>
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email">
+                <input type="email" class="form-control" id="email" name="email" required>
                 <label for="pwd" class="form-label">Password</label>
                 <div id="result"></div>
-                <input type="password" class="form-control" onkeyup="checkFields()" id="pwd" name="password">
+                <input type="password" class="form-control" onkeyup="checkFields()" id="pwd" name="password" required>
                 <label for="pwd2" class="form-label">Password (again)</label>
-                <input type="password" class="form-control" onkeyup="checkFields()" id="pwd2" name="password2">
+                <input type="password" class="form-control" onkeyup="checkFields()" id="pwd2" name="password2" required>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-success my-2" id="submitButton">Submit</button>
                 </div>

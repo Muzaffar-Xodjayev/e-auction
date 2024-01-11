@@ -146,36 +146,49 @@ def delete_watching_list(request, pk):
 def signup(request):
     context = {}
     if request.method == 'POST':
-        first_name = request.POST["firstname"]
-        last_name = request.POST["lastname"]
-        username = request.POST["username"]
-        email = request.POST["email"]
-        password = request.POST["password"]
-        if not User.objects.filter(username=username).exists():
-            user = User.objects.create_user(username=username, email=email, password=password)
-            user.first_name = first_name
-            user.last_name = last_name
-            user.save()
-            login(request, user)
-            return redirect("home-page")
+        if all(request.POST.get(field) for field in ["firstname", "lastname", "username", "email", "password", "password2"]):
+            first_name = request.POST["firstname"]
+            last_name = request.POST["lastname"]
+            username = request.POST["username"]
+            email = request.POST["email"]
+            password = request.POST["password"]
+            password2 = request.POST["password2"]
+            if not password == password2:
+                context['status'] = 'Two password field did not match.'
+                context['col'] = 'alert-danger'
+            else:
+                if not User.objects.filter(username=username).exists():
+                    user = User.objects.create_user(username=username, email=email, password=password)
+                    user.first_name = first_name
+                    user.last_name = last_name
+                    user.save()
+                    login(request, user)
+                    return redirect("home-page")
+                else:
+                    context['status'] = 'This username already exists !!!'
+                    context['col'] = 'alert-danger'
         else:
-            context['status'] = 'This username already exists !!!'
-            context['col'] = 'alert-danger'
+            context["status"] = "All fields should be fill"
+            context["col"] = "alert-danger"
     return render(request, "register.html", context)
 
 
 def login_page(request):
     context = {}
     if request.method == 'POST':
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(username=username, password=password)
-        if user:
-            login(request, user)
-            return redirect("home-page")
+        if all(request.POST.get(field) for field in ["username", "password"]):
+            username = request.POST["username"]
+            password = request.POST["password"]
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect("home-page")
+            else:
+                context['status'] = 'Username or Password incorrect !!!'
+                context['col'] = 'alert-danger'
         else:
-            context['status'] = 'Username or Password incorrect !!!'
-            context['col'] = 'alert-danger'
+            context["status"] = "All fields should be fill"
+            context["col"] = "alert-danger"
     return render(request, "login.html", context)
 
 
