@@ -18,4 +18,4 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
 echo "Starting server..."
-python manage.py runserver 0.0.0.0:8000
+gunicorn --workers=4 --threads=2 --bind 0.0.0.0:8000 core.wsgi:application
