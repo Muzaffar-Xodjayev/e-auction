@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 media/listings/
+static/
 auction/migrations/
 .idea/
 build/
